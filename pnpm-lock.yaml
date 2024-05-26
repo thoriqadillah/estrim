@@ -30,6 +30,9 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.1)
     devDependencies:
+      '@iconify-icon/solid':
+        specifier: ^2.1.1
+        version: 2.1.1(solid-js@1.8.11)
       '@types/node':
         specifier: ^20.12.12
         version: 20.12.12
@@ -396,6 +399,14 @@ packages:
 
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
+
+  '@iconify-icon/solid@2.1.1':
+    resolution: {integrity: sha512-1X7nt336uhilWO0iFPf5CCvYBgneiHaX2Fq254JPG9jasDW8/cXd2ZZbtmvSz7xra+Ve3uIn15n7f/8X6USmLg==}
+    peerDependencies:
+      solid-js: '>=1'
+
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   '@internationalized/date@3.5.4':
     resolution: {integrity: sha512-qoVJVro+O0rBaw+8HPjUB1iH8Ihf8oziEnqMnvhJUSuVIrHOuZ6eNLHNvzXJKUvAtaDiqMnRlg8Z2mgh09BlUw==}
@@ -835,6 +846,9 @@ packages:
 
   html-entities@2.3.3:
     resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
+
+  iconify-icon@2.1.0:
+    resolution: {integrity: sha512-lto4XU3bwTQnb+D/CsJ4dWAo0aDe+uPMxEtxyOodw9l7R9QnJUUab3GCehlw2M8mDHdeUu/ufx8PvRQiJphhXg==}
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
@@ -1512,6 +1526,13 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
+  '@iconify-icon/solid@2.1.1(solid-js@1.8.11)':
+    dependencies:
+      iconify-icon: 2.1.0
+      solid-js: 1.8.11
+
+  '@iconify/types@2.0.0': {}
+
   '@internationalized/date@3.5.4':
     dependencies:
       '@swc/helpers': 0.5.11
@@ -1979,6 +2000,10 @@ snapshots:
       function-bind: 1.1.1
 
   html-entities@2.3.3: {}
+
+  iconify-icon@2.1.0:
+    dependencies:
+      '@iconify/types': 2.0.0
 
   inflight@1.0.6:
     dependencies:
