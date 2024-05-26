@@ -12,7 +12,7 @@ const Navbar: Component = () => {
       </div>
 
       <div>
-        <a href="https://github.com">
+        <a href="https://github.com/thoriqadillah/fcompressor-fe">
           <Button variant='link' size='icon' class='flex gap-2 items-center'>
             <img src="https://api.iconify.design/logos:github-icon.svg?color=%23888888" alt="" />
           </Button>

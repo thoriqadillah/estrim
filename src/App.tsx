@@ -29,7 +29,7 @@ const App: Component = () => {
           </div>  
           <p class='text-xs'>
             Background file compressor that lets you compress a file in the background, 
-            even if without account and the tab is closed, 
+            even without account and the tab is closed, 
             you can still revisit and guaranteed getting the resulted file
           </p>
         </div>
