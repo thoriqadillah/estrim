@@ -1,7 +1,7 @@
 package compressor
 
 import (
-	"fcompressor/api/model"
+	"fcompressor/model"
 )
 
 type videoCompressor struct {
@@ -14,8 +14,8 @@ func newVideoCompressor(option *option) Compressor {
 	}
 }
 
-func (c *videoCompressor) Compress(fileId string) {
-
+func (c *videoCompressor) Compress(target *model.File) (*model.File, error) {
+	return nil, nil
 }
 
 func init() {

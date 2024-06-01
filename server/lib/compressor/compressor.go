@@ -1,28 +1,21 @@
 package compressor
 
 import (
-	"fcompressor/api/model"
-	"fcompressor/api/store"
+	"fcompressor/app/store"
 	"fcompressor/env"
 	"fcompressor/lib/storage"
+	"fcompressor/model"
 )
 
 type Compressor interface {
-	Compress(fileId string)
+	Compress(target *model.File) (*model.File, error)
 }
 
 type option struct {
-	store   store.Store
 	storage storage.Storage
 }
 
 type Option = func(opt *option)
-
-func UseStore(store store.Store) Option {
-	return func(opt *option) {
-		opt.store = store
-	}
-}
 
 func UseStorage(driver storage.Driver) Option {
 	return func(opt *option) {
@@ -34,7 +27,7 @@ type CompressorFactory = func(opt *option) Compressor
 
 var factories = map[string]CompressorFactory{}
 
-func New(name model.Type, options ...Option) Compressor {
+func New(name model.Type, store store.Store, options ...Option) Compressor {
 	option := &option{
 		storage: storage.New(env.Get("STORAGE_DRIVER").String(storage.Local)),
 	}

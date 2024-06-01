@@ -6,6 +6,13 @@ import (
 	"log"
 )
 
+type Metadata struct {
+	Name string
+	Size int64
+	Mime string
+	Path string
+}
+
 type Storage interface {
 	Serve(filename string) (io.Reader, error)
 	Save(filename string, src io.Reader) (path string, err error)

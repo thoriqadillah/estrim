@@ -17,6 +17,13 @@ type File struct {
 	Compressed bool   `json:"compressed"`
 }
 
+type CreateFile struct {
+	Path string `json:"path"`
+	Type Type   `json:"type"`
+	Mime string `json:"mime"`
+	Size int64  `json:"size"`
+}
+
 type UpdateFile struct {
 	Path       *string `json:"path"`
 	Compressed *bool   `json:"compressed"`
