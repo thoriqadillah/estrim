@@ -14,7 +14,7 @@ type localStorage struct {
 
 func newLocalStorage() Storage {
 	wd, _ := os.Getwd()
-	storageDir := filepath.Join(wd, "storage", "uploads")
+	storageDir := filepath.Join(wd, "lib", "storage", "uploads")
 	os.MkdirAll(storageDir, os.ModePerm)
 
 	return &localStorage{
@@ -22,10 +22,10 @@ func newLocalStorage() Storage {
 	}
 }
 
-func (s *localStorage) Serve(filename string) (io.Reader, error) {
+func (s *localStorage) Serve(filename string) (io.ReadCloser, error) {
 	path := filepath.Join(s.dir, filename)
 
-	file, err := os.Open(path)
+	file, err := os.OpenFile(path, os.O_RDONLY, 0644)
 	if err != nil {
 		return nil, err
 	}
@@ -35,11 +35,12 @@ func (s *localStorage) Serve(filename string) (io.Reader, error) {
 
 func (s *localStorage) Save(filename string, src io.Reader) (path string, err error) {
 	path = filepath.Join(s.dir, filename)
-
-	dst, err := os.OpenFile(path, os.O_WRONLY, 0644)
+	dst, err := os.Create(path)
 	if err != nil {
 		return "", nil
 	}
+
+	defer dst.Close()
 
 	if _, err := io.Copy(dst, src); err != nil {
 		return "", err

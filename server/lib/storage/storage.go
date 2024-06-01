@@ -3,7 +3,6 @@ package storage
 import (
 	"fcompressor/env"
 	"io"
-	"log"
 )
 
 type Metadata struct {
@@ -14,7 +13,7 @@ type Metadata struct {
 }
 
 type Storage interface {
-	Serve(filename string) (io.Reader, error)
+	Serve(filename string) (io.ReadCloser, error)
 	Save(filename string, src io.Reader) (path string, err error)
 	Remove(filename string) error
 }
@@ -29,7 +28,6 @@ func register(driver Driver, storage Storage) {
 
 func New(driver ...Driver) Storage {
 	d := env.Get("STORAGE_DRIVER").String(Local)
-	log.Println(factories[d])
 
 	if len(driver) > 0 {
 		d = driver[0]

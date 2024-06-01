@@ -27,6 +27,8 @@ func (c *imageCompressor) Compress(target *model.File) (*model.File, error) {
 		return nil, err
 	}
 
+	defer file.Close()
+
 	b, err := io.ReadAll(file)
 	if err != nil {
 		return nil, err
@@ -38,7 +40,7 @@ func (c *imageCompressor) Compress(target *model.File) (*model.File, error) {
 	}
 
 	processed, err := bimg.NewImage(converted).Process(bimg.Options{
-		Quality: 90,
+		Quality: c.quality,
 	})
 	if err != nil {
 		return nil, err
