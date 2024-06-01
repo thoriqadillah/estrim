@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-const LOCAL Driver = "local"
+const Local Driver = "local"
 
 type localStorage struct {
 	dir string
@@ -54,5 +54,5 @@ func (s *localStorage) Remove(filename string) error {
 }
 
 func init() {
-	register(LOCAL, newLocalStorage())
+	register(Local, newLocalStorage())
 }

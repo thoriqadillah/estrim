@@ -21,25 +21,25 @@ const App: Component = () => {
 
   return <>
     <Main>
-      <div class='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-        <div class='w-full max-w-lg text-center mb-5'>
+      <div class='absolute w-full px-4 sm:w-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+        <div class='w-full text-center mb-5'>
           <div class='font-medium flex gap-2 items-center justify-center'>
             <Icon icon='icon-park-outline:compression' class='text-3xl'/>
             <p class='text-3xl font-semibold'>FCompressor</p>
           </div>  
-          <p class='text-xs'>
+          <p class='text-xs text-center'>
             Background file compressor that lets you compress a file in the background, 
             even without account and the tab is closed, 
             you can still revisit and guaranteed getting the resulted file
           </p>
         </div>
 
-        <Button variant='secondary' disabled={progress() !== 0} class='max-w-lg w-full border relative flex gap-2'>
+        <Button variant={progress() !== 0 ? 'secondary' : 'default'} disabled={progress() !== 0} class='max-w-lg w-full border relative flex gap-2 mx-auto'>
           <Icon icon='material-symbols:attach-file-add-rounded' class='text-lg' />
           <p>Upload</p>
         </Button>
 
-        <div class='max-w-lg w-full mt-2'>
+        <div class='max-w-lg w-full mt-2 mx-auto'>
           <Progress value={progress()}/>
           <div>
             <div class='flex gap-2 justify-between'>

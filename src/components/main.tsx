@@ -7,7 +7,7 @@ interface Props {
 
 const Main: Component<Props> = ({ children }) => {
   return <>
-    <main class="max-w-screen-2xl h-screen relative">
+    <main class="max-w-screen-2xl w-full h-screen relative">
       <Navbar />
       {children}
     </main>

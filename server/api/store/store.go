@@ -1,6 +1,6 @@
 package store
 
-import "fcompressor/model"
+import "fcompressor/api/model"
 
 type Store interface {
 	Get(id string) (*model.File, error)

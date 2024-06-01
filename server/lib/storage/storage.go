@@ -21,7 +21,7 @@ func register(driver Driver, storage Storage) {
 }
 
 func New(driver ...Driver) Storage {
-	d := env.Get("STORAGE_DRIVER").String(LOCAL)
+	d := env.Get("STORAGE_DRIVER").String(Local)
 	log.Println(factories[d])
 
 	if len(driver) > 0 {
