@@ -5,7 +5,6 @@ import (
 	"fcompressor/common/response"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
 type accountService struct {
@@ -21,9 +20,9 @@ func newService(app *fiber.App) app.Service {
 }
 
 func (s *accountService) initSession(ctx *fiber.Ctx) error {
-	session := ctx.Locals("session").(*session.Session)
+	user := ctx.Locals("user_id").(string)
 
-	res, err := s.store.Session(session.ID())
+	res, err := s.store.Session(user)
 	if err != nil {
 		return response.InternalServerError(ctx, err)
 	}

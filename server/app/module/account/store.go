@@ -2,26 +2,27 @@ package account
 
 import (
 	"fcompressor/db"
+	"fcompressor/db/model"
 
 	"gorm.io/gorm"
 )
 
 type Store interface {
-	Session(id string) (User, error)
+	Session(id string) (model.User, error)
 }
 
-type sessionStore struct {
+type gormStore struct {
 	db *gorm.DB
 }
 
 func NewStore() Store {
-	return &sessionStore{
+	return &gormStore{
 		db: db.DB(),
 	}
 }
 
-func (s *sessionStore) Session(id string) (User, error) {
-	session := User{
+func (s *gormStore) Session(id string) (model.User, error) {
+	session := model.User{
 		Id: id,
 	}
 

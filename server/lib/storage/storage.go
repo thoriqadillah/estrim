@@ -5,17 +5,22 @@ import (
 	"io"
 )
 
-type Metadata struct {
-	Name string
-	Size int64
-	Mime string
-	Path string
+type StorageObject struct {
+	Name   string
+	Mime   string
+	Stream io.ReadCloser
 }
 
 type Storage interface {
-	Serve(filename string) (io.ReadCloser, error)
+	// Serve will serve the saved file
+	// Pathlike is typically a URL to the file
+	Serve(pathlike string) (io.ReadCloser, error)
+
+	// Save will save a file using the filename and the reader
 	Save(filename string, src io.Reader) (path string, err error)
-	Remove(filename string) error
+
+	// Remove will remove a file from storage
+	Remove(pathlike string) error
 }
 
 type Driver = string

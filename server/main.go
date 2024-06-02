@@ -3,9 +3,10 @@ package main
 import (
 	"fcompressor/app"
 	_ "fcompressor/app/module/account"
+	_ "fcompressor/app/module/compressor"
+	_ "fcompressor/app/module/storage"
 	"fcompressor/db"
 	"fcompressor/env"
-	_ "fcompressor/env"
 	"fcompressor/lib/auth"
 
 	"github.com/goccy/go-json"

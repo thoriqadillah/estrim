@@ -1,15 +1,20 @@
 package storage
 
 import (
+	"fcompressor/env"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/google/uuid"
 )
 
 const Local Driver = "local"
 
 type localStorage struct {
-	dir string
+	dir     string
+	baseUrl string
 }
 
 func newLocalStorage() Storage {
@@ -18,11 +23,13 @@ func newLocalStorage() Storage {
 	os.MkdirAll(storageDir, os.ModePerm)
 
 	return &localStorage{
-		dir: storageDir,
+		dir:     storageDir,
+		baseUrl: env.Get("BASE_URL").String(),
 	}
 }
 
-func (s *localStorage) Serve(filename string) (io.ReadCloser, error) {
+func (s *localStorage) Serve(pathlike string) (io.ReadCloser, error) {
+	filename := filepath.Base(pathlike)
 	path := filepath.Join(s.dir, filename)
 
 	file, err := os.OpenFile(path, os.O_RDONLY, 0644)
@@ -34,7 +41,9 @@ func (s *localStorage) Serve(filename string) (io.ReadCloser, error) {
 }
 
 func (s *localStorage) Save(filename string, src io.Reader) (path string, err error) {
-	path = filepath.Join(s.dir, filename)
+	id := uuid.NewString() + filepath.Ext(filename)
+	path = filepath.Join(s.dir, id)
+
 	dst, err := os.Create(path)
 	if err != nil {
 		return "", nil
@@ -46,11 +55,13 @@ func (s *localStorage) Save(filename string, src io.Reader) (path string, err er
 		return "", err
 	}
 
-	return path, nil
+	return fmt.Sprintf("%s/storage/%s", s.baseUrl, id), nil
 }
 
-func (s *localStorage) Remove(filename string) error {
+func (s *localStorage) Remove(pathlike string) error {
+	filename := filepath.Base(pathlike)
 	path := filepath.Join(s.dir, filename)
+
 	return os.Remove(path)
 }
 

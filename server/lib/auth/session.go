@@ -13,6 +13,6 @@ var sess = session.New(session.Config{
 
 func Session(ctx *fiber.Ctx) error {
 	session, _ := sess.Get(ctx)
-	ctx.Locals("session", session)
+	ctx.Locals("user_id", session.ID())
 	return ctx.Next()
 }

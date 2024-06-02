@@ -1,9 +1,9 @@
-package compressor
+package service
 
 import (
+	"fcompressor/db/model"
 	"fcompressor/env"
 	"fcompressor/lib/storage"
-	"fcompressor/model"
 )
 
 type Compressor interface {
@@ -33,7 +33,7 @@ type CompressorFactory = func(opt *option) Compressor
 
 var factories = map[string]CompressorFactory{}
 
-func New(name model.Type, options ...Option) Compressor {
+func NewCompressor(name model.Type, options ...Option) Compressor {
 	option := &option{
 		quality: 50,
 		storage: storage.New(env.Get("STORAGE_DRIVER").String(storage.Local)),

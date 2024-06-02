@@ -1,8 +1,8 @@
-package compressor
+package service
 
 import (
 	"bytes"
-	"fcompressor/model"
+	"fcompressor/db/model"
 	"io"
 	"path/filepath"
 	"strings"
@@ -63,7 +63,7 @@ func (c *imageCompressor) Compress(target *model.File) (*model.File, error) {
 	target.Path = path
 	target.Mime = "image/webp"
 	target.Size = int64(len(processed))
-	target.Compressed = true
+	target.IsCompressed = true
 
 	return target, nil
 }

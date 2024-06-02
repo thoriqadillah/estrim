@@ -1,7 +1,7 @@
-package compressor
+package service
 
 import (
-	"fcompressor/model"
+	"fcompressor/db/model"
 )
 
 type videoCompressor struct {
