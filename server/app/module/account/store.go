@@ -7,7 +7,7 @@ import (
 )
 
 type Store interface {
-	Init(id string) (User, error)
+	Session(id string) (User, error)
 }
 
 type sessionStore struct {
@@ -20,7 +20,7 @@ func NewStore() Store {
 	}
 }
 
-func (s *sessionStore) Init(id string) (User, error) {
+func (s *sessionStore) Session(id string) (User, error) {
 	session := User{
 		Id: id,
 	}

@@ -3,31 +3,27 @@ package account
 import (
 	"fcompressor/app"
 	"fcompressor/common/response"
-	"fcompressor/env"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
 type accountService struct {
-	app          *fiber.App
-	session      *session.Store
-	sessionStore Store
+	app   *fiber.App
+	store Store
 }
 
 func newService(app *fiber.App) app.Service {
 	return &accountService{
-		app:          app,
-		sessionStore: NewStore(),
-		session: session.New(session.Config{
-			Expiration: env.Get("SESSION_EXP").Duration("720h"),
-		}),
+		app:   app,
+		store: NewStore(),
 	}
 }
 
 func (s *accountService) initSession(ctx *fiber.Ctx) error {
-	session, _ := s.session.Get(ctx)
-	res, err := s.sessionStore.Init(session.ID())
+	session := ctx.Locals("session").(*session.Session)
+
+	res, err := s.store.Session(session.ID())
 	if err != nil {
 		return response.InternalServerError(ctx, err)
 	}
@@ -36,9 +32,9 @@ func (s *accountService) initSession(ctx *fiber.Ctx) error {
 }
 
 func (s *accountService) CreateRoutes() {
-	r := s.app.Group("/api/v1/user")
+	r := s.app.Group("/api/v1/account")
 
-	r.Get("/", s.initSession)
+	r.Get("/session", s.initSession)
 }
 
 func init() {
