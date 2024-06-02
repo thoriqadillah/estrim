@@ -1,48 +1,36 @@
 package store
 
 import (
-	"time"
+	"fcompressor/db"
+	"fcompressor/db/model"
 
-	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
-type sessionStore struct{}
-
-func NewSessionStorage() fiber.Storage {
-	return &sessionStore{}
+type SessionStore interface {
+	Init(id string) (model.Session, error)
 }
 
-// Get gets the value for the given key.
-// `nil, nil` is returned when the key does not exist
-func (s *sessionStore) Get(key string) ([]byte, error) {
-	panic("SESSION GET NOT IMPLEMENTED")
-	return nil, nil
+type sessionStore struct {
+	db *gorm.DB
 }
 
-// Set stores the given value for the given key along
-// with an expiration value, 0 means no expiration.
-// Empty key or value will be ignored without an error.
-func (s *sessionStore) Set(key string, val []byte, exp time.Duration) error {
-	panic("SESSION SET NOT IMPLEMENTED")
-	return nil
+func NewSessionStore() SessionStore {
+	return &sessionStore{
+		db: db.DB(),
+	}
 }
 
-// Delete deletes the value for the given key.
-// It returns no error if the storage does not contain the key,
-func (s *sessionStore) Delete(key string) error {
-	panic("SESSION DELETE NOT IMPLEMENTED")
-	return nil
-}
+func (s *sessionStore) Init(id string) (model.Session, error) {
+	session := model.Session{
+		Id: id,
+	}
 
-// Reset resets the storage and delete all keys.
-func (s *sessionStore) Reset() error {
-	panic("SESSION RESET NOT IMPLEMENTED")
-	return nil
-}
+	res := s.db.First(&session)
+	if res.RowsAffected == 1 {
+		return session, nil
+	}
 
-// Close closes the storage and will stop any running garbage
-// collectors and open connections.
-func (s *sessionStore) Close() error {
-	panic("SESSION CLOSE NOT IMPLEMENTED")
-	return nil
+	res = s.db.Create(&session)
+	return session, res.Error
 }

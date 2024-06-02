@@ -1,6 +1,8 @@
 package response
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 func Success(ctx *fiber.Ctx, res interface{}, code int) error {
 	return ctx.Status(code).JSON(res)
