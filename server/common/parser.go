@@ -9,6 +9,7 @@ type Parser interface {
 	String(defaults ...string) string
 	Int(defaults ...int) int
 	Duration(defaults ...string) time.Duration
+	Bytes(defaults ...[]byte) []byte
 }
 
 type stringParser struct {
@@ -62,4 +63,16 @@ func (s *stringParser) Duration(defaults ...string) time.Duration {
 	}
 
 	return 0
+}
+
+func (s *stringParser) Bytes(defaults ...[]byte) []byte {
+	if s.value != "" {
+		return []byte(s.value)
+	}
+
+	if len(defaults) > 0 {
+		return defaults[0]
+	}
+
+	return nil
 }

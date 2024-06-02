@@ -2,7 +2,7 @@ package main
 
 import (
 	"fcompressor/app"
-	_ "fcompressor/app/api"
+	_ "fcompressor/app/module/account"
 	"fcompressor/db"
 	_ "fcompressor/env"
 

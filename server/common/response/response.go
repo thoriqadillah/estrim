@@ -1,6 +1,8 @@
 package response
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -38,4 +40,8 @@ func BadRequest(ctx *fiber.Ctx, err error) error {
 
 func InternalServerError(ctx *fiber.Ctx, err error) error {
 	return Error(ctx, err, 500)
+}
+
+func Unauthorized(ctx *fiber.Ctx) error {
+	return Error(ctx, fmt.Errorf("unauthorized"), 401)
 }

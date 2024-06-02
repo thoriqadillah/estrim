@@ -1,8 +1,7 @@
-package api
+package account
 
 import (
 	"fcompressor/app"
-	"fcompressor/app/store"
 	"fcompressor/common/response"
 	"fcompressor/env"
 
@@ -10,23 +9,23 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
-type compressorService struct {
+type accountService struct {
 	app          *fiber.App
 	session      *session.Store
-	sessionStore store.SessionStore
+	sessionStore Store
 }
 
 func newService(app *fiber.App) app.Service {
-	return &compressorService{
+	return &accountService{
 		app:          app,
-		sessionStore: store.NewSessionStore(),
+		sessionStore: NewStore(),
 		session: session.New(session.Config{
 			Expiration: env.Get("SESSION_EXP").Duration("720h"),
 		}),
 	}
 }
 
-func (s *compressorService) initSession(ctx *fiber.Ctx) error {
+func (s *accountService) initSession(ctx *fiber.Ctx) error {
 	session, _ := s.session.Get(ctx)
 	res, err := s.sessionStore.Init(session.ID())
 	if err != nil {
@@ -36,10 +35,10 @@ func (s *compressorService) initSession(ctx *fiber.Ctx) error {
 	return response.Ok(ctx, res)
 }
 
-func (s *compressorService) CreateRoutes() {
-	r := s.app.Group("/api/v1")
+func (s *accountService) CreateRoutes() {
+	r := s.app.Group("/api/v1/user")
 
-	r.Get("/user", s.initSession)
+	r.Get("/", s.initSession)
 }
 
 func init() {
