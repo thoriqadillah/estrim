@@ -1,8 +1,8 @@
 package compressor
 
 import (
-	"fcompressor/db"
-	"fcompressor/db/model"
+	"estrim/db"
+	"estrim/db/model"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

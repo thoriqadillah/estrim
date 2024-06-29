@@ -1,9 +1,9 @@
 package service
 
 import (
-	"fcompressor/db/model"
-	"fcompressor/env"
-	"fcompressor/lib/storage"
+	"estrim/common/env"
+	"estrim/db/model"
+	"estrim/lib/storage"
 )
 
 type Compressor interface {

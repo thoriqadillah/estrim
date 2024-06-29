@@ -1,7 +1,7 @@
 package env
 
 import (
-	"fcompressor/common"
+	"estrim/common"
 	"fmt"
 	"os"
 

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fcompressor/app"
-	_ "fcompressor/app/module/account"
-	_ "fcompressor/app/module/compressor"
-	_ "fcompressor/app/module/storage"
-	"fcompressor/db"
-	"fcompressor/env"
-	"fcompressor/lib/auth"
+	"estrim/app"
+	_ "estrim/app/module/account"
+	_ "estrim/app/module/compressor"
+	_ "estrim/app/module/storage"
+	"estrim/common/env"
+	"estrim/db"
+	"estrim/lib/auth"
 
 	"github.com/goccy/go-json"
 

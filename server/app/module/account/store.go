@@ -1,8 +1,8 @@
 package account
 
 import (
-	"fcompressor/db"
-	"fcompressor/db/model"
+	"estrim/db"
+	"estrim/db/model"
 
 	"gorm.io/gorm"
 )

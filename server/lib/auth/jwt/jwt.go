@@ -1,7 +1,7 @@
 package jwt
 
 import (
-	"fcompressor/env"
+	"estrim/common/env"
 	"fmt"
 	"time"
 

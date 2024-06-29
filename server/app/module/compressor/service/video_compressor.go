@@ -1,7 +1,7 @@
 package service
 
 import (
-	"fcompressor/db/model"
+	"estrim/db/model"
 )
 
 type videoCompressor struct {

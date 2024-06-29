@@ -1,7 +1,7 @@
 package db
 
 import (
-	"fcompressor/env"
+	"estrim/common/env"
 	"fmt"
 	"log"
 	"os"

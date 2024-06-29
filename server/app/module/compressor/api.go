@@ -1,10 +1,10 @@
 package compressor
 
 import (
-	"fcompressor/app"
-	"fcompressor/common/response"
-	"fcompressor/lib/auth"
-	"fcompressor/lib/storage"
+	"estrim/app"
+	"estrim/common/response"
+	"estrim/lib/auth"
+	"estrim/lib/storage"
 
 	"github.com/gofiber/fiber/v2"
 )

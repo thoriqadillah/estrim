@@ -2,7 +2,7 @@ package service
 
 import (
 	"bytes"
-	"fcompressor/db/model"
+	"estrim/db/model"
 	"io"
 	"path/filepath"
 	"strings"

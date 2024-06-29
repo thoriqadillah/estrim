@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"fcompressor/common/response"
-	"fcompressor/lib/auth/jwt"
+	"estrim/common/response"
+	"estrim/lib/auth/jwt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"

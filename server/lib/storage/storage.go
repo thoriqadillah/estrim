@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fcompressor/env"
+	"estrim/common/env"
 	"io"
 )
 

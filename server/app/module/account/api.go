@@ -1,8 +1,8 @@
 package account
 
 import (
-	"fcompressor/app"
-	"fcompressor/common/response"
+	"estrim/app"
+	"estrim/common/response"
 
 	"github.com/gofiber/fiber/v2"
 )

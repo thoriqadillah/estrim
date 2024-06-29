@@ -1,7 +1,7 @@
 package app
 
 import (
-	"fcompressor/env"
+	"estrim/common/env"
 	"log"
 	"os"
 	"os/signal"

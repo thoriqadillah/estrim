@@ -1,9 +1,9 @@
 package storage
 
 import (
-	"fcompressor/app"
-	"fcompressor/common/response"
-	"fcompressor/lib/storage"
+	"estrim/app"
+	"estrim/common/response"
+	"estrim/lib/storage"
 	"mime"
 	"path/filepath"
 

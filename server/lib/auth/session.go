@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"fcompressor/env"
+	"estrim/common/env"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
