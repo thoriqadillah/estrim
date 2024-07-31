@@ -13,6 +13,7 @@ const (
 type File struct {
 	Id           string    `json:"id" gorm:"type:uuid;primaryKey;index"`
 	UserId       string    `json:"user_id"`
+	JobId        *int64    `json:"job_id"`
 	Name         string    `json:"name"`
 	Path         string    `json:"path"`
 	Mime         string    `json:"mime"`

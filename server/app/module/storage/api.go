@@ -11,13 +11,13 @@ import (
 )
 
 type storageService struct {
-	app     *fiber.App
+	*app.App
 	storage storage.Storage
 }
 
-func newService(app *fiber.App) app.Service {
+func newService(app *app.App) app.Service {
 	return &storageService{
-		app:     app,
+		App:     app,
 		storage: storage.New(),
 	}
 }
@@ -37,7 +37,7 @@ func (s *storageService) serveFile(ctx *fiber.Ctx) error {
 }
 
 func (s *storageService) CreateRoutes() {
-	r := s.app.Group("/api/v1/storage")
+	r := s.Api.Group("/api/v1/storage")
 
 	r.Get("/:id", s.serveFile)
 }

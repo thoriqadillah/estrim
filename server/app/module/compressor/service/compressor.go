@@ -7,7 +7,7 @@ import (
 )
 
 type Compressor interface {
-	Compress(target *model.File) (*model.File, error)
+	Compress(target *model.File) error
 }
 
 type option struct {

@@ -18,7 +18,7 @@ func DB() *gorm.DB {
 	return instance
 }
 
-func Open() {
+func Connection() string {
 	var (
 		host     = env.Get("DB_HOST").String("localhost")
 		port     = env.Get("DB_PORT").Int(5432)
@@ -26,6 +26,11 @@ func Open() {
 		password = env.Get("DB_PASSWORD").String()
 		db       = env.Get("DB_NAME").String("postgres")
 	)
+
+	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", host, username, password, db, port)
+}
+
+func Open() {
 
 	logger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -38,13 +43,13 @@ func Open() {
 		},
 	)
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", host, username, password, db, port)
+	dsn := Connection()
 	_db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger,
 	})
 
 	if err != nil {
-		log.Panic("DB ERROR", err)
+		log.Panicln("Failed to connect database", err)
 	}
 
 	instance = _db

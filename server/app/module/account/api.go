@@ -8,13 +8,13 @@ import (
 )
 
 type accountService struct {
-	app   *fiber.App
+	*app.App
 	store Store
 }
 
-func newService(app *fiber.App) app.Service {
+func newService(app *app.App) app.Service {
 	return &accountService{
-		app:   app,
+		App:   app,
 		store: NewStore(),
 	}
 }
@@ -31,7 +31,7 @@ func (s *accountService) initSession(ctx *fiber.Ctx) error {
 }
 
 func (s *accountService) CreateRoutes() {
-	r := s.app.Group("/api/v1/account")
+	r := s.Api.Group("/api/v1/account")
 
 	r.Get("/session", s.initSession)
 }

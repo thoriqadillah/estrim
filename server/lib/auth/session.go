@@ -14,5 +14,7 @@ var sess = session.New(session.Config{
 func Session(ctx *fiber.Ctx) error {
 	session, _ := sess.Get(ctx)
 	ctx.Locals("user_id", session.ID())
+	session.Save()
+
 	return ctx.Next()
 }

@@ -14,8 +14,8 @@ func newVideoCompressor(option *option) Compressor {
 	}
 }
 
-func (c *videoCompressor) Compress(target *model.File) (*model.File, error) {
-	return nil, nil
+func (c *videoCompressor) Compress(target *model.File) error {
+	return nil
 }
 
 func init() {

@@ -10,6 +10,7 @@ import (
 
 type Store interface {
 	Create(data CreateFile) (model.File, error)
+	AssignJob(fileId string, jobId int64) error
 }
 
 type gormStore struct {
@@ -35,4 +36,13 @@ func (s *gormStore) Create(data CreateFile) (model.File, error) {
 
 	res := s.db.Create(&file)
 	return file, res.Error
+}
+
+func (s *gormStore) AssignJob(fileId string, jobId int64) error {
+	return s.db.Model(&model.File{}).
+		Where("id = ?", fileId).
+		Updates(
+			map[string]interface{}{
+				"job_id": jobId,
+			}).Error
 }

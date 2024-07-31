@@ -1,26 +1,51 @@
 package compressor
 
 import (
+	"context"
 	"estrim/app"
+	"estrim/app/module/compressor/service"
 	"estrim/common/response"
 	"estrim/lib/auth"
 	"estrim/lib/storage"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/riverqueue/river"
 )
 
 type compressorService struct {
-	app     *fiber.App
+	*app.App
 	storage storage.Storage
 	store   Store
+	river.WorkerDefaults[CompressFile]
 }
 
-func newService(app *fiber.App) app.Service {
+func newService(app *app.App) app.Service {
 	return &compressorService{
-		app:     app,
+		App:     app,
 		storage: storage.New(),
 		store:   NewStore(),
 	}
+}
+
+func (s *compressorService) Work(ctx context.Context, job *river.Job[CompressFile]) error {
+	file := job.Args.File
+	option := job.Args.Option
+
+	select {
+	case <-ctx.Done():
+		return context.Canceled
+	default:
+		compressor := service.NewCompressor(file.Type, option.toFunc()...)
+		if err := compressor.Compress(&file); err != nil {
+			return err
+		}
+
+		// TODO: update the file
+		// TODO: notify user
+
+		return nil
+	}
+
 }
 
 func (s *compressorService) compress(ctx *fiber.Ctx) error {
@@ -54,15 +79,28 @@ func (s *compressorService) compress(ctx *fiber.Ctx) error {
 		return response.InternalServerError(ctx, err)
 	}
 
-	// TODO: compress in the background
+	args := createArgs(res, ctx)
+
+	inserted, err := s.Queue.Insert(context.Background(), args, nil)
+	if err != nil {
+		return response.InternalServerError(ctx, err)
+	}
+
+	if err := s.store.AssignJob(res.Id, inserted.Job.ID); err != nil {
+		return response.InternalServerError(ctx, err)
+	}
 
 	return response.Ok(ctx, res)
 }
 
 func (s *compressorService) CreateRoutes() {
-	r := s.app.Group("/api/v1/compress")
+	r := s.Api.Group("/api/v1/compress")
 
 	r.Post("/", auth.User, s.compress)
+}
+
+func (s *compressorService) CreateWorker(workers *river.Workers) {
+	river.AddWorker(workers, s)
 }
 
 func init() {
