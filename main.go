@@ -36,6 +36,7 @@ func frontend() http.FileSystem {
 	return http.FS(dist)
 }
 
+// Redirect back to the index.html so the frontend can handle it
 func notFound(ctx *fiber.Ctx) error {
 	html, err := web.ReadFile("web/dist/index.html")
 	if err != nil {
