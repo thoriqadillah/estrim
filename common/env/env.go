@@ -10,7 +10,7 @@ import (
 
 func init() {
 	wd, _ := os.Getwd()
-	path := fmt.Sprintf("%s/../.env", wd)
+	path := fmt.Sprintf("%s/.env", wd)
 	godotenv.Load(path)
 }
 
