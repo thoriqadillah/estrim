@@ -15,7 +15,7 @@ type storageService struct {
 	storage storage.Storage
 }
 
-func newService(app *app.App) app.Service {
+func NewService(app *app.App) app.Service {
 	return &storageService{
 		App:     app,
 		storage: storage.New(),
@@ -43,5 +43,5 @@ func (s *storageService) CreateRoutes() {
 }
 
 func init() {
-	app.RegisterService(newService)
+	app.RegisterService(NewService)
 }

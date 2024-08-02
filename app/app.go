@@ -61,6 +61,13 @@ func New(fiber *fiber.App) *App {
 			worker.CreateWorker(workers)
 		}
 
+		if init, ok := svc.(Initter); ok {
+			if err := init.Init(); err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		svc.CreateRoutes()
 		_services = append(_services, svc)
 	}
 
@@ -72,16 +79,6 @@ func New(fiber *fiber.App) *App {
 
 func (a *App) Start() {
 	ctx := context.Background()
-
-	for _, service := range a.services {
-		if init, ok := service.(Initter); ok {
-			if err := init.Init(); err != nil {
-				log.Fatal(err)
-			}
-		}
-
-		service.CreateRoutes()
-	}
 
 	if err := a.Queue.Start(ctx); err != nil {
 		log.Panicln("Failed to start queue:", err)

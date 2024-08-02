@@ -19,7 +19,7 @@ type compressorService struct {
 	river.WorkerDefaults[CompressFile]
 }
 
-func newService(app *app.App) app.Service {
+func NewService(app *app.App) app.Service {
 	return &compressorService{
 		App:     app,
 		storage: storage.New(),
@@ -101,8 +101,4 @@ func (s *compressorService) CreateRoutes() {
 
 func (s *compressorService) CreateWorker(workers *river.Workers) {
 	river.AddWorker(workers, s)
-}
-
-func init() {
-	app.RegisterService(newService)
 }

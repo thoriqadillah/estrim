@@ -12,7 +12,7 @@ type accountService struct {
 	store Store
 }
 
-func newService(app *app.App) app.Service {
+func NewService(app *app.App) app.Service {
 	return &accountService{
 		App:   app,
 		store: NewStore(),
@@ -34,8 +34,4 @@ func (s *accountService) CreateRoutes() {
 	r := s.Api.Group("/api/v1/account")
 
 	r.Get("/session", s.initSession)
-}
-
-func init() {
-	app.RegisterService(newService)
 }

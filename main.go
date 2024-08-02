@@ -3,9 +3,8 @@ package main
 import (
 	"embed"
 	"estrim/app"
-	_ "estrim/app/module/account"
-	_ "estrim/app/module/compressor"
-	_ "estrim/app/module/storage"
+	_ "estrim/app/module"
+	"estrim/common/response"
 	"estrim/db"
 	"estrim/lib/auth"
 	"io/fs"
@@ -13,12 +12,17 @@ import (
 	"net/http"
 
 	"github.com/goccy/go-json"
+	"github.com/joho/godotenv"
 
 	_ "ariga.io/atlas-provider-gorm/gormschema"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
+
+func init() {
+	godotenv.Load()
+}
 
 //go:embed web/dist/*
 var web embed.FS
@@ -30,6 +34,15 @@ func frontend() http.FileSystem {
 	}
 
 	return http.FS(dist)
+}
+
+func notFound(ctx *fiber.Ctx) error {
+	html, err := web.ReadFile("web/dist/index.html")
+	if err != nil {
+		return response.InternalServerError(ctx, err)
+	}
+
+	return ctx.Type("html").Send(html)
 }
 
 func main() {
@@ -50,5 +63,7 @@ func main() {
 	)
 
 	api := app.New(fiber)
+	fiber.Use("*", notFound)
+
 	api.Start()
 }
