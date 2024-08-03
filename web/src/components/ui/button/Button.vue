@@ -7,7 +7,9 @@ import { cn } from '@/components/ui/shadcn'
 interface Props extends PrimitiveProps {
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes['class'],
+  appendIcon?: string
+  prependIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,8 +21,14 @@ const props = withDefaults(defineProps<Props>(), {
   <Primitive
     :as="as"
     :as-child="asChild"
-    :class="cn(buttonVariants({ variant, size }), props.class)"
+    :class="cn('flex gap-2', buttonVariants({ variant, size }), props.class)"
   >
+    <slot name="prependIcon">
+      <img v-if="prependIcon" :src="prependIcon" alt="">
+    </slot>
     <slot />
+    <slot name="appendIcon">
+      <img v-if="appendIcon" :src="appendIcon" alt="">
+    </slot>
   </Primitive>
 </template>
