@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <Primitive :class="cn('text-5xl font-bold tracking-tighter', props.class)">
+  <Primitive :class="cn('text-xl font-medium tracking-tight', props.class)">
     <slot/>
   </Primitive>
 </template>
