@@ -5,11 +5,11 @@ import { Routes } from '@/router';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import { Icon } from '@iconify/vue';
 
 const route = useRoute()
 </script>
@@ -17,14 +17,14 @@ const route = useRoute()
 <template>
   <nav class="p-3 flex items-center justify-between max-w-screen-2xl mx-auto">
     <span class="flex gap-3">
-      <img src="https://api.iconify.design/fluent:document-folder-24-regular.svg?color=%23000" width="23" alt="">
+       <Icon icon="fluent:document-folder-24-regular" class="text-foreground" width="23" />
       <p class="font-semibold text-lg">Estrim</p>
     </span>
 
     <Sheet>
       <SheetTrigger>
         <Button variant="ghost" size="icon" class="md:hidden">
-          <img src="https://api.iconify.design/fluent:list-rtl-16-filled.svg?color=%23000" width="20" alt="">
+          <Icon icon="fluent:list-rtl-16-filled" width="20" class="text-foreground" />
         </Button>
       </SheetTrigger>
       <SheetContent>

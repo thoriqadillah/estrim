@@ -4,11 +4,12 @@ import type { PrimitiveProps } from 'radix-vue';
 import { ref } from 'vue';
 
 const emits = defineEmits<{
-  (e: 'droped', file: File[]): void
+  (e: 'change', file: File[]): void,
 }>()
 
 interface Props extends PrimitiveProps {
   class?: string
+  type?: string,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,31 +18,41 @@ const props = withDefaults(defineProps<Props>(), {
 
 const active = ref(false)
 
-function activate() {
-  active.value = true
-}
+function onDrop(e: DragEvent) {
+  active.value = false
 
-function deactivate() {
-  active.value = true
-}
-
-function onDrop(event: DragEvent) {
-  deactivate()
-  if (event.dataTransfer) {
-    emits('droped', [...event.dataTransfer.files])
+  if (e.dataTransfer) {
+    emits('change', [...e.dataTransfer.files])
+    files.value.push(...e.dataTransfer.files)
   }
+}
+
+const input = ref<HTMLInputElement>()
+const files = defineModel<File[]>({
+  default: []
+})
+
+function fileChange(e: Event) {
+  const fileinput = e.target as HTMLInputElement
+  if (!fileinput.files) return
+  
+  files.value.push(...fileinput.files)
+  emits('change', [...fileinput.files])
 }
 
 </script>
 
 <template>
   <div 
-    :class="cn(props.class)" 
-    :data-active="active" 
-    @dragenter.prevent="activate"
-    @dragleave.prevent="deactivate"
-    @drop.prevent="onDrop"
+  :class="cn(props.class)" 
+  :data-active="active" 
+  @dragenter.prevent
+  @dragover.prevent="() => active = true"
+  @dragleave="() => active = false"
+  @drop.prevent="onDrop"
+  @click="input?.click()"
   >
+    <input type="file" @change="fileChange" multiple hidden ref="input">
     <slot :active="active" />
   </div>
 </template>
