@@ -17,7 +17,7 @@ const route = useRoute()
 <template>
   <nav class="p-3 flex items-center justify-between max-w-screen-2xl mx-auto">
     <span class="flex gap-3">
-       <Icon icon="fluent:document-folder-24-regular" class="text-foreground" width="23" />
+      <Icon icon="fluent:document-folder-24-regular" class="text-foreground mt-1" width="23" />
       <p class="font-semibold text-lg">Estrim</p>
     </span>
 

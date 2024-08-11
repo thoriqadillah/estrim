@@ -9,34 +9,48 @@ import {
   SelectValue,
   type Option,
 } from '.'
+import { cn } from '../shadcn';
 
-defineProps<{
+const props = defineProps<{
   label: string
-  options: Option[]
+  options: Option[] | string[]
   class?: string,
   placeholder?: string
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<Option | string>()
 const emits = defineEmits<{
-  (e: 'select', option: Option): void
+  (e: 'select', option: Option | string): void,
 }>()
 
+function select(option: Option | string) {
+  if (typeof option !== 'string' && option.disabled) {
+    return
+  }
 
-function select(option: Option) {
-  if (option.disabled) return
-
-  model.value = option.value
+  model.value = option
   emits('select', option)
+}
+
+function toValue(option: Option | string) {
+  return typeof option === 'string' ? option : option.value
+}
+
+function toLabel(option: Option | string) {
+  return typeof option === 'string' ? option : option.label
+}
+
+function isDisabled(option: Option | string): boolean {
+  return typeof option === 'string' ? false : (option.disabled || false)
 }
 
 </script>
 
 <template>
-  <SelectContainer plac>
-    <SelectTrigger :class="class">
+  <SelectContainer :defaultValue="model ? toValue(model) : undefined">
+    <SelectTrigger :class="cn('border border-input', props.class)">
       <slot>
-        <SelectValue :placeholder="placeholder" class="mr-2" />
+        <SelectValue :placeholder="model ? toLabel(model) : placeholder" class="mr-2" />
       </slot>
     </SelectTrigger>
     <SelectContent>
@@ -44,11 +58,13 @@ function select(option: Option) {
         <SelectLabel>{{ label }}</SelectLabel>
         <SelectItem
           v-for="option in options" 
-          :value="option.value"
-          :key="option.value"
+          ref="r"
+          :value="toValue(option)"
+          :key="toValue(option)"
+          :disabled="isDisabled(option)"
           @click="() => select(option)"
-          :disabled="option.disabled">
-          {{ option.label }}
+          class="cursor-pointer">
+          {{ toLabel(option) }}
         </SelectItem>
       </SelectGroup>
     </SelectContent>

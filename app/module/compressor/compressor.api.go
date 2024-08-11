@@ -90,6 +90,8 @@ func (s *compressorService) compress(ctx *fiber.Ctx) error {
 		return response.InternalServerError(ctx, err)
 	}
 
+	res.JobId = &inserted.Job.ID
+
 	return response.Ok(ctx, res)
 }
 

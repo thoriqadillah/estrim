@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/vue';
+import type { UploadableFile } from '../types';
 
 defineProps<{
   type: string
-  file: File
+  file: UploadableFile
 }>()
+
+const emits = defineEmits<{
+  (e: 'cancel'): void
+}>()
+
 </script>
 
 <template>
@@ -14,5 +21,16 @@ defineProps<{
     <Icon v-else-if="type === 'video'" icon="fluent:video-32-regular" class="text-muted-foreground mx-auto" width="70" />
     <p class="text-xs max-w-24 truncate text-left mt-2 font-medium">{{ file.name }}</p>
     <p class="text-muted-foreground text-xs max-w-20 truncate text-left">{{ file.size }} KB</p>
+    <Button 
+      variant="ghost" 
+      size="icon" 
+      class="absolute w-6 h-6 top-1 right-1" 
+      @click="(e) => {
+        e.stopPropagation()
+        emits('cancel')
+      }"
+    >
+      <Icon icon="mdi:close" />
+    </Button>
   </div>
 </template>
