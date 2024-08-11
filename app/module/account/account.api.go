@@ -3,6 +3,7 @@ package account
 import (
 	"estrim/app"
 	"estrim/common/response"
+	"estrim/lib/auth"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,8 +31,14 @@ func (s *accountService) initSession(ctx *fiber.Ctx) error {
 	return response.Ok(ctx, res)
 }
 
+func (s *accountService) refreshToken(ctx *fiber.Ctx) error {
+	// TODO
+	return response.Unauthorized(ctx)
+}
+
 func (s *accountService) CreateRoutes() {
 	r := s.Api.Group("/api/v1/account")
 
-	r.Get("/session", s.initSession)
+	r.Get("/session", auth.User, s.initSession)
+	r.Get("/refresh-token", s.refreshToken)
 }

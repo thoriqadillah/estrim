@@ -19,5 +19,5 @@ type User struct {
 	ResetPasswordToken *string   `json:"-"`
 	CreatedAt          time.Time `json:"created_at" gorm:"autoCreateTime"`
 
-	Files []File `json:"files" gorm:"foreignKey:UserId"`
+	Files []File `json:"files,omitempty" gorm:"foreignKey:UserId"`
 }

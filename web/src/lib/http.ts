@@ -6,10 +6,11 @@ import axios, {
 import { eventBus } from "./event-bus";
 import type { Toast } from "@/components/ui/toast/use-toast";
 
-const REFRESH_TOKEN = "/v1/refresh-token";
+const REFRESH_TOKEN = "/v1/account/refresh-token";
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL + "/api",
+  withCredentials: true
 });
 
 async function onError(error: AxiosError) {
@@ -17,6 +18,7 @@ async function onError(error: AxiosError) {
 
   const res = error.response;
   const origin = error.config as any;
+  
   if (res.status === 401 && origin.url !== REFRESH_TOKEN && !origin._retry) {
     origin._retry = true;
     try {
@@ -27,8 +29,8 @@ async function onError(error: AxiosError) {
       if (error instanceof AxiosError) {
         const err = error.toJSON() as AxiosError;
         if (err.status === 401) {
+          localStorage.removeItem('access-token')
           eventBus.emit("logout");
-          // TODO: logout
         }
       }
     }
