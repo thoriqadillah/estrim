@@ -13,6 +13,7 @@
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/core": "^10.11.0",
+    "axios": "^1.7.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "non.geist": "^1.0.3",
