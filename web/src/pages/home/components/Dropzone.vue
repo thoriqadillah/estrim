@@ -69,14 +69,10 @@ async function upload() {
   
     const uploaded = await api.compress(form, progress => {
       model.value[i].progress = progress
-      if (model.value[i].progress === 100) {
-        eventBus.emit('uploaded', uploaded?.id)
-      }
-
-      model.value = model.value.filter(el => el.progress !== 100)
     })
   
-    eventBus.emit('uploaded', uploaded)
+    eventBus.emit('uploaded', uploaded?.id)
+    model.value = model.value.filter(el => el.progress !== 100)
   })
 }
 

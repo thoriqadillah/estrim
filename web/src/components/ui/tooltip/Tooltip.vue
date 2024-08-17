@@ -8,6 +8,7 @@ import {
 
 defineProps<{
   text?: string
+  side?: 'top' | 'right' | 'bottom' | 'left'
 }>()
 </script>
 
@@ -17,7 +18,7 @@ defineProps<{
       <TooltipTrigger>
         <slot/>
       </TooltipTrigger>
-      <TooltipContent v-if="text">
+      <TooltipContent v-if="text" :side="side">
         <p>{{ text }}</p>
       </TooltipContent>
     </TooltipContainer>
