@@ -3,7 +3,7 @@ import { cn } from '@/components/ui/shadcn';
 import type { PrimitiveProps } from 'radix-vue';
 import { ref } from 'vue';
 import type { UploadableFile } from '../types';
-import { api, eventBus } from '@/lib';
+import { eventBus, api } from '@/lib';
 
 const emits = defineEmits<{
   (e: 'change', file: UploadableFile[]): void,
@@ -67,8 +67,13 @@ async function upload() {
     form.append('file', file)
     form.append('type', props.type || 'image')
   
-    const uploaded = await api.upload(form, progress => {
+    const uploaded = await api.compress(form, progress => {
       model.value[i].progress = progress
+      if (model.value[i].progress === 100) {
+        eventBus.emit('uploaded', uploaded?.id)
+      }
+
+      model.value = model.value.filter(el => el.progress !== 100)
     })
   
     eventBus.emit('uploaded', uploaded)

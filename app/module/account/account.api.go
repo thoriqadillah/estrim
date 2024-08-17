@@ -39,6 +39,6 @@ func (s *accountService) refreshToken(ctx *fiber.Ctx) error {
 func (s *accountService) CreateRoutes() {
 	r := s.Api.Group("/api/v1/account")
 
-	r.Get("/session", auth.User, s.initSession)
+	r.Get("/", auth.User, s.initSession)
 	r.Get("/refresh-token", s.refreshToken)
 }
