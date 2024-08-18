@@ -17,9 +17,9 @@ const props = defineProps<{
 <template>
   <div :class="cn('w-full h-[4rem] rounded-lg border border-muted bg-muted/60 p-2 flex items-center relative', props.class)">
     <div class="flex gap-2 items-center justify-between w-full">
-      <Icon v-if="type === 'image'" icon="fluent:image-32-regular"  class="text-muted-foreground" width="40" />
-      <Icon v-else-if="type === 'pdf'" icon="fluent:document-pdf-32-regular" class="text-muted-foreground" width="40" />
-      <Icon v-else-if="type === 'video'" icon="fluent:video-32-regular" class="text-muted-foreground" width="40" />
+      <Icon v-if="type === 'image'" icon="fluent:image-32-regular"  class="text-foreground" width="40" />
+      <Icon v-else-if="type === 'pdf'" icon="fluent:document-pdf-32-regular" class="text-foreground" width="40" />
+      <Icon v-else-if="type === 'video'" icon="fluent:video-32-regular" class="text-foreground" width="40" />
   
       <div class="flex flex-col w-full">
         <p class="font-medium text-sm line-clamp-1">{{ name }}</p>

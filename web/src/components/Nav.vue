@@ -16,10 +16,10 @@ const route = useRoute()
 
 <template>
   <nav class="p-3 flex items-center justify-between max-w-screen-2xl mx-auto">
-    <span class="flex gap-3">
+    <RouterLink :to="{ name: Routes.Home }" class="flex gap-3">
       <Icon icon="fluent:document-folder-24-regular" class="text-foreground mt-1" width="23" />
       <p class="font-semibold text-lg">Estrim</p>
-    </span>
+    </RouterLink>
 
     <Sheet>
       <SheetTrigger>
@@ -62,7 +62,7 @@ const route = useRoute()
         <Button variant="link" :class="`hover:no-underline ${route.path === '/pricing' ? '' : 'text-muted-foreground hover:text-foreground'}`">Pricing</Button>
       </RouterLink>
       <RouterLink :to="{ name: Routes.Home }">
-        <Button variant="link" :class="`hover:no-underline ${route.path === '/sign-in' ? '' : 'text-muted-foreground hover:text-foreground'}`">Sign in</Button>
+        <Button variant="link" class="hover:no-underline">Sign in</Button>
       </RouterLink>
       <Button>Sign up</Button>
     </div>

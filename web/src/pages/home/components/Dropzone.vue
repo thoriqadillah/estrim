@@ -71,8 +71,10 @@ async function upload() {
       model.value[i].progress = progress
     })
   
-    eventBus.emit('uploaded', uploaded?.id)
-    model.value = model.value.filter(el => el.progress !== 100)
+    if (uploaded) {
+      eventBus.emit('uploaded', uploaded.id)
+      model.value = model.value.filter(el => el.progress !== 100)
+    }
   })
 }
 

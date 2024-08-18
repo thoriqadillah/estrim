@@ -6,6 +6,9 @@ export const fileApi = {
     return http.post<UploadedFile>('/v1/compress', form, {
       onUploadProgress: (e) => {
         onProgress && onProgress((e.progress || 0) * 100)
+      },
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
     })
     .then(res => res.data)

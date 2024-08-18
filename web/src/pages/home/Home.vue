@@ -42,7 +42,7 @@ const dropzone = ref<InstanceType<typeof Dropzone>>()
 </script>
 
 <template>
-  <div class="flex gap-2">
+  <div class="flex gap-2 relative">
     <Sidebar/>
     <div class="w-full my-20">
       <div class="text-center">

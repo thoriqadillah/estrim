@@ -1,20 +1,19 @@
 import { reactive } from 'vue';
 
-type Events = {
-  [key: string]: Array<(payload?: any) => void>;
-};
+type Listener<T> = (payload: T) => void
+type Events<T = any> = Record<string, Listener<T>[]>
 
 class EventBus {
   private events: Events = reactive({});
 
-  on<T = any>(event: string, listener: (payload?: T) => void) {
+  on<T = any>(event: string, listener: Listener<T>) {
     if (!this.events[event]) {
       this.events[event] = [];
     }
     this.events[event].push(listener);
   }
 
-  off<T = any>(event: string, listener: (payload?: T) => void) {
+  off<T = any>(event: string, listener: Listener<T>) {
     if (this.events[event]) {
       this.events[event] = this.events[event].filter(l => l !== listener);
     }
